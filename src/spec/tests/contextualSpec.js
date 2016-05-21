@@ -20,6 +20,10 @@ describe('contextual', () => {
       const result = contextual({ React, defaultTheme })
       expect(result.getTheme).toEqual(jasmine.any(Function))
     })
+    it(`returns schemeNames array for defaultTheme ${defaultTheme}`, () => {
+      const result = contextual({ React, defaultTheme })
+      expect(result.schemeNames).toEqual(jasmine.any(Array))
+    })
     it(`returns theme for valid theme name passed to getTheme for ${defaultTheme}`, () => {
       const { getTheme } = contextual({ React, defaultTheme })
       const result = getTheme('tomorrow-light')

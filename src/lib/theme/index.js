@@ -2,6 +2,8 @@ import { assert } from 'chai'
 import invert from './palettes/invert'
 import { schemeNames, getScheme } from './scheme'
 
+export const createThemeName = (schemeName, inverted = false) => `${schemeName}-${inverted ? 'dark' : 'light'}`
+
 export default ({ defaultTheme, overrideTheme }) => {
   assert.typeOf(defaultTheme, 'string')
   assert(defaultTheme.includes('-'))
@@ -93,7 +95,7 @@ export default ({ defaultTheme, overrideTheme }) => {
     const inverted = lightOrDark === 'dark'
     const palette = getScheme(schemeName)
     assert.ok(palette, `No theme exists for scheme '${schemeName}', options are [${schemeNames.join(',')}]`)
-    const theme = buildTheme(`${schemeName}-${inverted ? 'dark' : 'light'}`, palette, inverted)
+    const theme = buildTheme(themeName, palette, inverted)
     const override = overrideTheme(themeName, context)
     if(override)
       return { ...theme, ...override(theme), isOverridden: true }

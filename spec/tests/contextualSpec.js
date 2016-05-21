@@ -26,6 +26,10 @@ describe('contextual', function () {
       var result = contextual({ React: React, defaultTheme: defaultTheme });
       expect(result.getTheme).toEqual(jasmine.any(Function));
     });
+    it('returns schemeNames array for defaultTheme ' + defaultTheme, function () {
+      var result = contextual({ React: React, defaultTheme: defaultTheme });
+      expect(result.schemeNames).toEqual(jasmine.any(Array));
+    });
     it('returns theme for valid theme name passed to getTheme for ' + defaultTheme, function () {
       var _contextual = contextual({ React: React, defaultTheme: defaultTheme });
 
