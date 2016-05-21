@@ -1,6 +1,6 @@
 {
   "name": "contextual",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "context builder for React apps that assists in app themes and other common context properties.",
   "main": "lib/index.js",
   "files": [
