@@ -4,12 +4,12 @@ import { schemeNames, getScheme } from './scheme'
 
 export const createThemeName = (schemeName, inverted = false) => `${schemeName}-${inverted ? 'dark' : 'light'}`
 
-export default ({ defaultTheme, overrideTheme }) => {
-  assert.typeOf(defaultTheme, 'string')
-  assert(defaultTheme.includes('-'))
-  const themeSplit = defaultTheme.split('-')
-  assert(schemeNames.indexOf(themeSplit[0]) !== -1, `'${defaultTheme}' is not a valid theme`)
-  assert(['light', 'dark'].indexOf(themeSplit[1]) !== -1, `'${defaultTheme}' is not a valid theme`)
+export default ({ defaultThemeName, overrideTheme }) => {
+  assert.typeOf(defaultThemeName, 'string')
+  assert(defaultThemeName.includes('-'))
+  const themeSplit = defaultThemeName.split('-')
+  assert(schemeNames.indexOf(themeSplit[0]) !== -1, `'${defaultThemeName}' is not a valid theme`)
+  assert(['light', 'dark'].indexOf(themeSplit[1]) !== -1, `'${defaultThemeName}' is not a valid theme`)
 
   const buildTheme = (themeName, palette, inverted = false) => {
     const p = inverted ? invert(palette) : palette
@@ -34,16 +34,75 @@ export default ({ defaultTheme, overrideTheme }) => {
             , color
             , brand
                         /** body styles are set directly on the html (should not be react shorthands) */
-            , style:  { body: { width: '100%'
-                              , backgroundColor: p['base3']
-                              , float: 'left'
-                              , paddingBottom: '50px'
-                              }
-                      , app:  { width: '100%'
+            , style:  { app:  { width: '80%'
                               , height: '100%'
-                              , backgroundColor: color.primary
                               , color: color.secondary
+                              , marginLeft: '10%'
                               }
+                      , body: { backgroundColor: p['base3']
+                              , padding: 0
+                              , margin: 0
+                              }
+                      , content:  { width: '100%'
+                                  , backgroundColor: p['base2']
+                                  , float: 'left'
+                                  , marginTop: 10
+                                  , marginBottom: 30
+                                  , paddingTop: 20
+                                  , paddingBottom: 20
+                                  , borderRadius: 5
+                                  , border: `1px solid ${p['base0']}`
+                                  }
+                      , header: { wrapper:  { display: 'flex'
+                                            , flexDirection: 'row'
+                                            , flex: '1 0 300px'
+                                            , justifyContent: 'space-between'
+                                            , alignItems: 'center'
+                                            , marginTop: 10
+                                            , marginBottom: 10
+                                            }
+                                , hamburger:  { backgroundColor: p['base2']
+                                              , borderRadius: 4
+                                              , border: `1px solid ${p['base3']}`
+                                              , height: 32
+                                              , width: 32
+                                              , cursor: 'pointer'
+                                              }
+                                , title:  { fontSize: '1.8em'
+                                          , fontFamily: 'Lato'
+                                          , fontWeight: 'bold'
+                                          , marginLeft: 20
+                                          , marginRight: 'auto'
+                                          }
+                                , subtitle: { fontSize: 9, marginLeft: 10, marginTop: 0, paddingTop: 0 }
+                                , anchor: { color: color.accent, textDecoration: 'none' }
+                                , banner: { marginRight: 20, marginTop: 3 }
+                                , settings: { }
+                                , settingsImage: { height: 45, textShadow: '-1px -1px 0 #000' }
+                                }
+                      , footer: { wrapper:  { display: 'flex'
+                                            , flexDirection: 'row'
+                                            , flex: '0 1 10px'
+                                            , flexWrap: 'nowrap'
+                                            , justifyContent: 'space-between'
+                                            , alignItems: 'flex-end'
+                                            , position: 'fixed'
+                                            , bottom: 5
+                                            , width: '80%'
+                                            }
+                                , left: { display: 'flex'
+                                        , flexDirection: 'column'
+                                        }
+                                , right: { display: 'flex'
+                                        , flexDirection: 'column'
+                                        }
+                                , row:  { display: 'flex'
+                                        , flexDirection: 'row'
+                                        , justifyContent: 'space-between'
+                                        , flexWrap: 'nowrap'
+                                        }
+                                , anchor: { color: color.accent, textDecoration: 'none' }
+                                }
                       , panel:  { backgroundColor: brand.default
                                 , borderColor: color.tertiary
                                 , borderStyle: 'solid'
@@ -76,17 +135,35 @@ export default ({ defaultTheme, overrideTheme }) => {
                                 , display: 'inline'
                                 , cursor: 'default'
                                 }
+                      , ul: { marginLeft: '15%'
+                            , marginRight: '15%'
+                            , paddingTop: 10
+                            , paddingBottom: 10
+                            , lineHeight: 2
+                            }
+                      , paragraph:  {
+                                    //, margin: 15
+                                    padding: 10
+                                    }
+                      , form: {
+                              //, margin: 15
+                              padding: 10
+                              }
                       , input:  { color: p['base03']
                                 , backgroundColor: p['base3']
+                                , fontSize: '1.1em'
+                                , padding: 10
+                                , minWidth: 300
                                 , borderColor: color.tertiary
+                                , borderRadius: 4
                                 , borderWidth: 1
-                                , borderStyle: 'solid'
-                                }
-                      }
+                              , borderStyle: 'solid'
+                              }
+                    }
             }
   }
 
-  const getTheme = (themeName = defaultTheme, context) => {
+  const getTheme = (themeName = defaultThemeName, context) => {
     assert.ok(themeName)
     assert.typeOf(themeName, 'string')
     assert(themeName.includes('-'), `themeName must be of format '(schemeName)-(light|dark)`)

@@ -13,25 +13,29 @@ describe('contextual', function () {
   it('is a function', function () {
     return expect(contextual).toEqual(jasmine.any(Function));
   });
-  goodThemeNames.map(function (defaultTheme) {
-    it('returns an object for defaultTheme \'' + defaultTheme + '\'', function () {
-      var result = contextual({ React: React, defaultTheme: defaultTheme });
+  goodThemeNames.map(function (defaultThemeName) {
+    it('returns an object for defaultThemeName \'' + defaultThemeName + '\'', function () {
+      var result = contextual({ React: React, defaultThemeName: defaultThemeName });
       expect(result).toEqual(jasmine.any(Object));
     });
-    it('returns contextTypes object for defaultTheme ' + defaultTheme, function () {
-      var result = contextual({ React: React, defaultTheme: defaultTheme });
+    it('returns contextTypes object for defaultThemeName ' + defaultThemeName, function () {
+      var result = contextual({ React: React, defaultThemeName: defaultThemeName });
       expect(result.contextTypes).toEqual(jasmine.any(Object));
     });
-    it('returns getTheme function for defaultTheme ' + defaultTheme, function () {
-      var result = contextual({ React: React, defaultTheme: defaultTheme });
+    it('returns getTheme function for defaultThemeName ' + defaultThemeName, function () {
+      var result = contextual({ React: React, defaultThemeName: defaultThemeName });
       expect(result.getTheme).toEqual(jasmine.any(Function));
     });
-    it('returns schemeNames array for defaultTheme ' + defaultTheme, function () {
-      var result = contextual({ React: React, defaultTheme: defaultTheme });
+    it('returns schemeNames array for defaultThemeName ' + defaultThemeName, function () {
+      var result = contextual({ React: React, defaultThemeName: defaultThemeName });
       expect(result.schemeNames).toEqual(jasmine.any(Array));
     });
-    it('returns theme for valid theme name passed to getTheme for ' + defaultTheme, function () {
-      var _contextual = contextual({ React: React, defaultTheme: defaultTheme });
+    it('returns matching defaultTheme for defaultThemeName ' + defaultThemeName, function () {
+      var result = contextual({ React: React, defaultThemeName: defaultThemeName });
+      expect(result.defaultTheme.themeName).toEqual(defaultThemeName);
+    });
+    it('returns theme for valid theme name passed to getTheme for ' + defaultThemeName, function () {
+      var _contextual = contextual({ React: React, defaultThemeName: defaultThemeName });
 
       var getTheme = _contextual.getTheme;
 
@@ -42,13 +46,13 @@ describe('contextual', function () {
 
   it('throws when React not passed', function () {
     return expect(function () {
-      return contextual({ defaultTheme: goodThemeNames[0] });
+      return contextual({ defaultThemeName: goodThemeNames[0] });
     }).toThrow();
   });
-  badThemeNames.map(function (defaultTheme) {
-    return it('throws on defaultTheme \'' + defaultTheme + '\'', function () {
+  badThemeNames.map(function (defaultThemeName) {
+    return it('throws on defaultThemeName \'' + defaultThemeName + '\'', function () {
       return expect(function () {
-        return contextual({ React: React, defaultTheme: defaultTheme });
+        return contextual({ React: React, defaultThemeName: defaultThemeName });
       }).toThrow();
     });
   });
